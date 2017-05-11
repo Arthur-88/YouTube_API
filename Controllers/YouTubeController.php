@@ -19,7 +19,7 @@ class YouTubeController
 		$maxResults = $_POST['maxResults'];
 		
 	// Возвращается массив данных для вывода на экран (список видео, соответствующих запросу, запрос, количество видео)
-		$data = (new VIDEOdata) -> getVIDEOdata($search,$maxResults,$sort);
+		$data = (new VIDEOlist) -> getVIDEOdata($search,$maxResults,$sort);
 			
 		// Вызывается метод включения в HTML код данных для вывода на экран, результат возвращается в роутер
 		return \View::render($data);
