@@ -13,7 +13,7 @@ class VIDEOlist
  */	protected function YTrequest(array $PARAMS,$requestTYPE)
     {
 		$url = 'https://www.googleapis.com/youtube/v3/';
-		$PARAMS['key'] = include 'App_params.php';	// Ключ к API YouTube хранится в файле App_params.php
+		$PARAMS['key'] = include './Configs/App_params.php';	// Ключ к API YouTube хранится в файле App_params.php
 	
 		$requestPARAMS = http_build_query($PARAMS);
 		$HTTPrequest = $url.$requestTYPE.'&'.$requestPARAMS;
