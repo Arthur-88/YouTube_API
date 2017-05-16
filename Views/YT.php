@@ -6,10 +6,13 @@
 </head>
 <body>
 	<form method="post">
-        <input type="search" name="search">
-	    <input type="submit" name="submit" value="Искать" formaction="/YT/VIDEOlist">
+		<?php if(!isset($search)): $search=null; $maxResults=null; ?>
+		<?php endif ?>
+			<input type="search" value="<?=$search?>" name="search">
+			<input type="submit" name="submit" value="Искать" formaction="/">
+			<input type="submit" name="sort" value="Сортировать по просмотрам" formaction="/YT/VIDEOlist/viewCount">
 		<p>Сколько результатов поиска вывести?
-			<input type="text" name="maxResults">
+			<input type="text" value="<?=$maxResults?>" name="maxResults">
 		</p>
 	</form>
 </body>

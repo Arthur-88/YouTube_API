@@ -2,26 +2,34 @@
 
 namespace Controllers;
 
-use YouTube_API\VIDEOdata;
-use YouTube_API\VIDEOlist;
+use YouTube_API\videoList;
 use Views\Output;
-use Helpers\JSON;
 
 class YouTubeController
 {
-	public function searchVIDEO($sort = null)
+	public function searchVideo()
     {
-		$error = ['errorMessage' => 'Введите слово для поиска'];
-        if (empty($_POST['search']))	// Проверяется ввод поискового запроса
-			return JSON::toJson($error); 
+		$data = self::paramsDefinition();
+		extract($data,EXTR_REFS);
 		
-		$search = $_POST['search'];
-		$maxResults = $_POST['maxResults'];
+		if(isset($search) && $search) $video = (new videoList)-> getVideoData(compact("search","maxResults","sort"));
 		
-	// Возвращается массив данных для вывода на экран (список видео, соответствующих запросу, запрос, количество видео)
-		$data = (new VIDEOdata) -> getVIDEOdata($search,$maxResults,$sort);
+		return \View::render('Output',compact("video","search","maxResults"));
+	}
+	
+	public function paramsDefinition()
+	{
+		if ((!isset($_REQUEST['submit']) && !isset($_REQUEST['sort'])) 
+			|| (!isset($_REQUEST['search'])) || !($_REQUEST['search'])) return ([]);
+		
+		$search = $_REQUEST['search'];
+		
+		if (isset($_REQUEST['sort'])) $sort = $_REQUEST['sort'];
+		else $sort = null;
 			
-		// Вызывается метод включения в HTML код данных для вывода на экран, результат возвращается в роутер
-		return \View::render($data);
+		$maxResults = $_REQUEST['maxResults'];
+		if(!$maxResults||$maxResults > 20)	$maxResults = 20;
+		
+		return compact("search","maxResults","sort");	
 	}
 }

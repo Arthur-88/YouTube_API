@@ -22,9 +22,8 @@ function searchRoute($routes, $url)
     $data = array();
     foreach ($routes as $key => $value) 
 	{
-        $pattern = str_replace(':num', '([\d]+)', $key);
-		$pattern = str_replace(':text', '([\w]+)', $pattern);
-        if (preg_match('{^'. $pattern .'$}', $url, $matches)) 
+		$pattern = '/^([^?]+)(\?.*?)?(#.*)?$/';
+		if (preg_match($pattern, $url, $matches)) 		
 		{
 			array_shift($matches);
             $data['route'] = $key;

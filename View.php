@@ -1,11 +1,11 @@
 <?php
 class View
 {
-    public static function render(array $data)
+    public static function render($template = 'errors/404.php', $data = null)
     {
-		extract($data,EXTR_REFS);
+		if ($data && is_array($data)) extract($data,EXTR_REFS);
         ob_start();
-		require './Views/Output.php';
+		require './Views/'. $template . '.php';
 	    $html = ob_get_clean();
         return $html;
     }
